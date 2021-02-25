@@ -19,13 +19,11 @@ import static java.lang.invoke.MethodType.methodType;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.range;
 
-record FastAccessImpl(Kind kind) implements FastAccess {
-  private record Kind(MethodHandle getInt, MethodHandle setInt) { }
-
+record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastAccess {
   @Override
   public int getInt(MemorySegment segment, String path) {
     try {
-      return (int) kind.getInt.invokeExact(path, 0, segment, -1L, -1L);
+      return (int) getInt.invokeExact(path, 0, segment, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -36,7 +34,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   @Override
   public int getInt(MemorySegment segment, String path, long index0) {
     try {
-      return (int) kind.getInt.invokeExact(path, 1, segment, index0, -1L);
+      return (int) getInt.invokeExact(path, 1, segment, index0, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -47,7 +45,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   @Override
   public int getInt(MemorySegment segment, String path, long index0, long index1) {
     try {
-      return (int) kind.getInt.invokeExact(path, 2, segment, index0, index1);
+      return (int) getInt.invokeExact(path, 2, segment, index0, index1);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -58,7 +56,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   @Override
   public void setInt(MemorySegment segment, String path, int value) {
     try {
-      kind.setInt.invokeExact(path, 0, segment, value, -1L, -1L);
+      setInt.invokeExact(path, 0, segment, value, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -69,7 +67,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   @Override
   public void setInt(MemorySegment segment, String path, long index0, int value) {
     try {
-      kind.setInt.invokeExact(path, 1, segment, value, index0, -1L);
+      setInt.invokeExact(path, 1, segment, value, index0, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -80,7 +78,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   @Override
   public void setInt(MemorySegment segment, String path, long index0, long index1, int value) {
     try {
-      kind.setInt.invokeExact(path, 0, segment, value, index0, index1);
+      setInt.invokeExact(path, 0, segment, value, index0, index1);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -89,8 +87,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
   }
 
   static FastAccess getImpl(MemoryLayout layout) {
-    var kind = new Kind(getIntMH(layout), setIntMH(layout));
-    return new FastAccessImpl(kind);
+    return new FastAccessImpl(getIntMH(layout), setIntMH(layout));
   }
 
   private static MethodHandle getIntMH(MemoryLayout layout) {
