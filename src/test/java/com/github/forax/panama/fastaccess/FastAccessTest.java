@@ -12,7 +12,43 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FastAccessTest {
 
   @Test
-  public void getInt() {
+  public void getIntArray() {
+    var array = MemoryLayout.ofSequence(
+        MemoryLayout.ofValueBits(32, nativeOrder())
+    );
+
+    var fastAccess = FastAccess.of(array);
+    try (var segment = MemorySegment.allocateNative(400)) {
+      for (int i = 0 ; i < 100 ; i++) {
+        MemoryAccess.setIntAtIndex(segment, i, i);
+      }
+
+      for (int i = 0 ; i < 100 ; i++) {
+        assertEquals(i, fastAccess.getInt(segment, "[]", i));
+      }
+    }
+  }
+
+  @Test
+  public void setIntArray() {
+    var array = MemoryLayout.ofSequence(
+        MemoryLayout.ofValueBits(32, nativeOrder())
+    );
+
+    var fastAccess = FastAccess.of(array);
+    try (var segment = MemorySegment.allocateNative(400)) {
+      for (int i = 0 ; i < 100 ; i++) {
+        fastAccess.setInt(segment, "[]", i, i);
+      }
+
+      for (int i = 0 ; i < 100 ; i++) {
+        assertEquals(i, MemoryAccess.getIntAtIndex(segment, i));
+      }
+    }
+  }
+
+  @Test
+  public void getIntArrayOfStruct() {
     SequenceLayout keyValues = MemoryLayout.ofSequence(
         MemoryLayout.ofStruct(
             MemoryLayout.ofValueBits(32, nativeOrder()).withName("key"),
@@ -32,7 +68,7 @@ public class FastAccessTest {
   }
 
   @Test
-  public void setInt() {
+  public void setIntArrayOfStruct() {
     SequenceLayout keyValues = MemoryLayout.ofSequence(
         MemoryLayout.ofStruct(
             MemoryLayout.ofValueBits(32, nativeOrder()).withName("key"),
@@ -47,10 +83,6 @@ public class FastAccessTest {
 
       assertEquals(42, MemoryAccess.getIntAtIndex(segment, 2));
       assertEquals(84, MemoryAccess.getIntAtIndex(segment, 5));
-
-      for (int i = 0 ; i < 100 ; i++) {
-        MemoryAccess.setIntAtIndex(segment, i, i);
-      }
     }
   }
 
