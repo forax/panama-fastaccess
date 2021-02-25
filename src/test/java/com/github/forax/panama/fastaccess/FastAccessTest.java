@@ -48,6 +48,40 @@ public class FastAccessTest {
   }
 
   @Test
+  public void getIntStruct() {
+    var struct = MemoryLayout.ofStruct(
+            MemoryLayout.ofValueBits(32, nativeOrder()).withName("key"),
+            MemoryLayout.ofValueBits(32, nativeOrder()).withName("value")
+        );
+
+    var fastAccess = FastAccess.of(struct);
+    try (var segment = MemorySegment.allocateNative(400)) {
+      MemoryAccess.setIntAtIndex(segment, 0, 777);
+      MemoryAccess.setIntAtIndex(segment, 1, 333);
+
+      assertEquals(777, fastAccess.getInt(segment, ".key"));
+      assertEquals(333, fastAccess.getInt(segment, ".value"));
+    }
+  }
+
+  @Test
+  public void setIntStruct() {
+    var struct = MemoryLayout.ofStruct(
+        MemoryLayout.ofValueBits(32, nativeOrder()).withName("key"),
+        MemoryLayout.ofValueBits(32, nativeOrder()).withName("value")
+    );
+
+    var fastAccess = FastAccess.of(struct);
+    try (var segment = MemorySegment.allocateNative(400)) {
+      fastAccess.setInt(segment, ".key", 777);
+      fastAccess.setInt(segment, ".value", 333);
+
+      assertEquals(777, MemoryAccess.getIntAtIndex(segment, 0));
+      assertEquals(333, MemoryAccess.getIntAtIndex(segment, 1));
+    }
+  }
+
+  @Test
   public void getIntArrayOfStruct() {
     SequenceLayout keyValues = MemoryLayout.ofSequence(
         MemoryLayout.ofStruct(
