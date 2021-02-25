@@ -8,7 +8,6 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.MutableCallSite;
-import java.lang.invoke.VarHandle;
 import java.lang.invoke.VarHandle.AccessMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +16,7 @@ import static java.lang.invoke.MethodHandles.dropArguments;
 import static java.lang.invoke.MethodHandles.guardWithTest;
 import static java.lang.invoke.MethodHandles.insertArguments;
 import static java.lang.invoke.MethodType.methodType;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.range;
 
 record FastAccessImpl(Kind kind) implements FastAccess {
@@ -152,6 +152,9 @@ record FastAccessImpl(Kind kind) implements FastAccess {
     }
 
     private Object erasedGet(String path, int arity, MemorySegment segment, long[] indexes) throws Throwable {
+      requireNonNull(segment, "segment is null");
+      requireNonNull(path, "path is null");
+
       //noinspection StringEquality
       if (path != path.intern()) {
         throw new IllegalArgumentException("path " + path + " is not a constant string");
@@ -182,6 +185,9 @@ record FastAccessImpl(Kind kind) implements FastAccess {
     }
 
     private void erasedSet(String path, int arity, MemorySegment segment, Object value, long[] indexes) throws Throwable {
+      requireNonNull(segment, "segment is null");
+      requireNonNull(path, "path is null");
+
       //noinspection StringEquality
       if (path != path.intern()) {
         throw new IllegalArgumentException("path " + path + " is not a constant string");
@@ -238,7 +244,7 @@ record FastAccessImpl(Kind kind) implements FastAccess {
         offset++;
         return Token.ARRAY;
       }
-      throw new IllegalStateException("invalid character '" + c + "' in " + path);
+      throw new IllegalArgumentException("path parsing: invalid character '" + c + "' in " + path);
     }
 
     private void nextIdentifier() {
