@@ -103,9 +103,50 @@ public interface FastAccess {
    */
   int getInt(MemorySegment segment, String path, long index0, long index1);
 
-
+  /**
+   * Read an int from the {@code segment} at the position specified by the {@code path}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param value the int value to write
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid
+   * @throws IllegalStateException if the path as more than zero {@code []}
+   */
   void setInt(MemorySegment segment, String path, int value);
+
+  /**
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the index {@code index0}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the {@code []} specified by the path
+   * @param value the int value to write
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid
+   * @throws IllegalStateException if the path as more or less than one {@code []}
+   */
   void setInt(MemorySegment segment, String path, long index0, int value);
+
+  /**
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * {@code index0} and {@code index1}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the first {@code []} specified by the path
+   * @param index1 the index that will be inserted inside the second {@code []} specified by the path
+   * @param value the int value to write
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid
+   * @throws IllegalStateException if the path as more or less than two {@code []}
+   */
   void setInt(MemorySegment segment, String path, long index0, long index1, int value);
 
   /**
