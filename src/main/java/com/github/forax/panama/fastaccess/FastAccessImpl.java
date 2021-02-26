@@ -23,7 +23,7 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public int getInt(MemorySegment segment, String path) {
     try {
-      return (int) getInt.invokeExact(path, 0, segment, -1L, -1L);
+      return (int) getInt.invokeExact(path, 0, segment, -1L, -1L, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -34,7 +34,7 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public int getInt(MemorySegment segment, String path, long index0) {
     try {
-      return (int) getInt.invokeExact(path, 1, segment, index0, -1L);
+      return (int) getInt.invokeExact(path, 1, segment, index0, -1L, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -45,7 +45,29 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public int getInt(MemorySegment segment, String path, long index0, long index1) {
     try {
-      return (int) getInt.invokeExact(path, 2, segment, index0, index1);
+      return (int) getInt.invokeExact(path, 2, segment, index0, index1, -1L, -1L);
+    } catch (RuntimeException | Error e) {
+      throw e;
+    } catch (Throwable t) {
+      throw new AssertionError(t);
+    }
+  }
+
+  @Override
+  public int getInt(MemorySegment segment, String path, long index0, long index1, long index2) {
+    try {
+      return (int) getInt.invokeExact(path, 2, segment, index0, index1, index2, -1L);
+    } catch (RuntimeException | Error e) {
+      throw e;
+    } catch (Throwable t) {
+      throw new AssertionError(t);
+    }
+  }
+
+  @Override
+  public int getInt(MemorySegment segment, String path, long index0, long index1, long index2, long index3) {
+    try {
+      return (int) getInt.invokeExact(path, 2, segment, index0, index1, index2, index3);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -56,7 +78,7 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public void setInt(MemorySegment segment, String path, int value) {
     try {
-      setInt.invokeExact(path, 0, segment, value, -1L, -1L);
+      setInt.invokeExact(path, 0, segment, value, -1L, -1L, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -67,7 +89,7 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public void setInt(MemorySegment segment, String path, long index0, int value) {
     try {
-      setInt.invokeExact(path, 1, segment, value, index0, -1L);
+      setInt.invokeExact(path, 1, segment, value, index0, -1L, -1L, -1L);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -78,7 +100,29 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
   @Override
   public void setInt(MemorySegment segment, String path, long index0, long index1, int value) {
     try {
-      setInt.invokeExact(path, 0, segment, value, index0, index1);
+      setInt.invokeExact(path, 0, segment, value, index0, index1, -1L, -1L);
+    } catch (RuntimeException | Error e) {
+      throw e;
+    } catch (Throwable t) {
+      throw new AssertionError(t);
+    }
+  }
+
+  @Override
+  public void setInt(MemorySegment segment, String path, long index0, long index1, long index2, int value) {
+    try {
+      setInt.invokeExact(path, 0, segment, value, index0, index1, index2, -1L);
+    } catch (RuntimeException | Error e) {
+      throw e;
+    } catch (Throwable t) {
+      throw new AssertionError(t);
+    }
+  }
+
+  @Override
+  public void setInt(MemorySegment segment, String path, long index0, long index1, long index2, long index3, int value) {
+    try {
+      setInt.invokeExact(path, 0, segment, value, index0, index1, index2, index3);
     } catch (RuntimeException | Error e) {
       throw e;
     } catch (Throwable t) {
@@ -124,13 +168,13 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
       this.carrier = carrier;
       this.accessMode = accessMode;
       this.layout = layout;
-      setTarget(fallback(accessMode).bindTo(this).asCollector(long[].class, 2).asType(type()));
+      setTarget(fallback(accessMode).bindTo(this).asCollector(long[].class, 4).asType(type()));
     }
 
     private static MethodType typeFromAccessMode(Class<?> carrier,AccessMode accessMode) {
       return switch(accessMode) {
-        case GET -> methodType(carrier, String.class, int.class, MemorySegment.class, long.class, long.class);
-        case SET -> methodType(void.class, String.class, int.class, MemorySegment.class, carrier, long.class, long.class);
+        case GET -> methodType(carrier, String.class, int.class, MemorySegment.class, long.class, long.class, long.class, long.class);
+        case SET -> methodType(void.class, String.class, int.class, MemorySegment.class, carrier, long.class, long.class, long.class, long.class);
         default -> throw new AssertionError("invalid access mode " + accessMode);
       };
     }
@@ -166,11 +210,11 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
         throw new IllegalStateException("path arity " + (parameterCount - 1) + " does not match method arity " + arity);
       }
 
-      if (parameterCount != 3) {
-        mh = dropArguments(mh, parameterCount, range(0, 3 - parameterCount).mapToObj(__ -> long.class).toArray(Class[]::new));
+      if (parameterCount != 5) {
+        mh = dropArguments(mh, parameterCount, range(0, 5 - parameterCount).mapToObj(__ -> long.class).toArray(Class[]::new));
       }
 
-      var result = mh.asSpreader(long[].class, 2).invoke(segment, indexes);
+      var result = mh.asSpreader(long[].class, 4).invoke(segment, indexes);
 
       var guard = guardWithTest(
           insertArguments(SAME_SHAPE, 2, path, arity),
@@ -199,15 +243,15 @@ record FastAccessImpl(MethodHandle getInt, MethodHandle setInt) implements FastA
         throw new IllegalStateException("path arity " + (parameterCount - 2) + " does not match method arity " + arity);
       }
 
-      if (parameterCount != 4) {
-        mh = dropArguments(mh, parameterCount - 1, range(0, 4 - mh.type().parameterCount()).mapToObj(__ -> long.class).toArray(Class[]::new));
+      if (parameterCount != 6) {
+        mh = dropArguments(mh, parameterCount - 1, range(0, 6 - mh.type().parameterCount()).mapToObj(__ -> long.class).toArray(Class[]::new));
       }
 
       mh = MethodHandles.permuteArguments(mh,
-          methodType(void.class, MemorySegment.class, int.class, long.class, long.class),
-          0, 2, 3, 1);
+          methodType(void.class, MemorySegment.class, int.class, long.class, long.class, long.class, long.class),
+          0, 2, 3, 4, 5, 1);
 
-      mh.asSpreader(long[].class, 2).invoke(segment, value, indexes);
+      mh.asSpreader(long[].class, 4).invoke(segment, value, indexes);
 
       var guard = guardWithTest(
           insertArguments(SAME_SHAPE, 2, path, arity),

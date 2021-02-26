@@ -85,7 +85,7 @@ public interface FastAccess {
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
    *         is invalid or if the layout path does not select a value layout
    *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
-   *         that that does not match that of the size of an int.
+   *         that that does not match that of the size of an int
    * @throws IllegalStateException if the path as more or less than one {@code []}
    */
   int getInt(MemorySegment segment, String path, long index0);
@@ -98,16 +98,60 @@ public interface FastAccess {
    * @param path the path to the struct member
    * @param index0 the index that will be inserted inside the first {@code []} specified by the path
    * @param index1 the index that will be inserted inside the second {@code []} specified by the path
-   * @return the int value at the position specified by the {@code path} and the index {@code index0}
+   * @return the int value at the position specified by the {@code path} and the indexes {@code index0}
+   *         and  {@code index1}
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
    *         is invalid or if the layout path does not select a value layout
    *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
-   *         that that does not match that of the size of an int.
+   *         that that does not match that of the size of an int
    * @throws IllegalStateException if the path as more or less than two {@code []}
    */
   int getInt(MemorySegment segment, String path, long index0, long index1);
+
+  /**
+   * Read an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * {@code index0}, {@code index1} and {@code index2}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the first {@code []} specified by the path
+   * @param index1 the index that will be inserted inside the second {@code []} specified by the path
+   * @param index2 the index that will be inserted inside the third {@code []} specified by the path
+   * @return the int value at the position specified by the {@code path} and the indexes {@code index0},
+   *         {@code index1} and {@code index2}
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int
+   * @throws IllegalStateException if the path as more or less than three {@code []}
+   */
+  int getInt(MemorySegment segment, String path, long index0, long index1, long index2);
+
+  /**
+   * Read an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * {@code index0}, {@code index1}, {@code index2} and {@code index3}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the first {@code []} specified by the path
+   * @param index1 the index that will be inserted inside the second {@code []} specified by the path
+   * @param index2 the index that will be inserted inside the third {@code []} specified by the path
+   * @param index3 the index that will be inserted inside the fourth {@code []} specified by the path
+   * @return the int value at the position specified by the {@code path} and the indexes {@code index0},
+   *         {@code index1}, {@code index2} and {@code index3}
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int
+   * @throws IllegalStateException if the path as more or less than four {@code []}
+   */
+  int getInt(MemorySegment segment, String path, long index0, long index1, long index2, long index3);
 
   /**
    * Read an int from the {@code segment} at the position specified by the {@code path}.
@@ -120,7 +164,7 @@ public interface FastAccess {
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
    *         is invalid or if the layout path does not select a value layout
    *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
-   *         that that does not match that of the size of an int.
+   *         that that does not match that of the size of an int
    * @throws IllegalStateException if the path as more than zero {@code []}
    */
   void setInt(MemorySegment segment, String path, int value);
@@ -137,7 +181,7 @@ public interface FastAccess {
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
    *         is invalid or if the layout path does not select a value layout
    *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
-   *         that that does not match that of the size of an int.
+   *         that that does not match that of the size of an int
    * @throws IllegalStateException if the path as more or less than one {@code []}
    */
   void setInt(MemorySegment segment, String path, long index0, int value);
@@ -156,10 +200,51 @@ public interface FastAccess {
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
    *         is invalid or if the layout path does not select a value layout
    *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
-   *         that that does not match that of the size of an int.
+   *         that that does not match that of the size of an int
    * @throws IllegalStateException if the path as more or less than two {@code []}
    */
   void setInt(MemorySegment segment, String path, long index0, long index1, int value);
+
+  /**
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * {@code index0}, {@code index1} and {@code index2}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the first {@code []} specified by the path
+   * @param index1 the index that will be inserted inside the second {@code []} specified by the path
+   * @param index2 the index that will be inserted inside the third {@code []} specified by the path
+   * @param value the int value to write
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int
+   * @throws IllegalStateException if the path as more or less than three {@code []}
+   */
+  void setInt(MemorySegment segment, String path, long index0, long index1, long index2, int value);
+
+  /**
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * {@code index0}, {@code index1}, {@code index2} and {@code index3}.
+   *
+   * @param segment the current segment
+   * @param path the path to the struct member
+   * @param index0 the index that will be inserted inside the first {@code []} specified by the path
+   * @param index1 the index that will be inserted inside the second {@code []} specified by the path
+   * @param index2 the index that will be inserted inside the third {@code []} specified by the path
+   * @param index3 the index that will be inserted inside the fourth {@code []} specified by the path
+   * @param value the int value to write
+   *
+   * @throws NullPointerException is either the {@code segment} or the {@code path} is null
+   * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int
+   * @throws IllegalStateException if the path as more or less than four {@code []}
+   */
+  void setInt(MemorySegment segment, String path, long index0, long index1, long index2, long index3, int value);
 
   /**
    * Creates a {@code FastAccess} instance from a {@link MemoryLayout}.
