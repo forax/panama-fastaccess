@@ -66,7 +66,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more than zero {@code []}
    */
   int getInt(MemorySegment segment, String path);
@@ -81,7 +83,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more or less than one {@code []}
    */
   int getInt(MemorySegment segment, String path, long index0);
@@ -98,7 +102,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more or less than two {@code []}
    */
   int getInt(MemorySegment segment, String path, long index0, long index1);
@@ -112,7 +118,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more than zero {@code []}
    */
   void setInt(MemorySegment segment, String path, int value);
@@ -127,7 +135,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more or less than one {@code []}
    */
   void setInt(MemorySegment segment, String path, long index0, int value);
@@ -144,7 +154,9 @@ public interface FastAccess {
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
    * @throws IllegalArgumentException if the path is not a constant string or if the syntax of the path
-   *         is invalid
+   *         is invalid or if the layout path does not select a value layout
+   *         (see {@link jdk.incubator.foreign.ValueLayout}) or if the selected value layout has a size
+   *         that that does not match that of the size of an int.
    * @throws IllegalStateException if the path as more or less than two {@code []}
    */
   void setInt(MemorySegment segment, String path, long index0, long index1, int value);
