@@ -91,14 +91,14 @@ public interface FastAccess {
   int getInt(MemorySegment segment, String path, long index0);
 
   /**
-   * Read an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Read an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0} and {@code index1}.
    *
    * @param segment the current segment
    * @param path the path to the struct member
    * @param index0 the index that will be inserted inside the first {@code []} specified by the path
    * @param index1 the index that will be inserted inside the second {@code []} specified by the path
-   * @return the int value at the position specified by the {@code path} and the indexes {@code index0}
+   * @return the int value at the position specified by the {@code path} and the indices {@code index0}
    *         and  {@code index1}
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
@@ -111,7 +111,7 @@ public interface FastAccess {
   int getInt(MemorySegment segment, String path, long index0, long index1);
 
   /**
-   * Read an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Read an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0}, {@code index1} and {@code index2}.
    *
    * @param segment the current segment
@@ -119,7 +119,7 @@ public interface FastAccess {
    * @param index0 the index that will be inserted inside the first {@code []} specified by the path
    * @param index1 the index that will be inserted inside the second {@code []} specified by the path
    * @param index2 the index that will be inserted inside the third {@code []} specified by the path
-   * @return the int value at the position specified by the {@code path} and the indexes {@code index0},
+   * @return the int value at the position specified by the {@code path} and the indices {@code index0},
    *         {@code index1} and {@code index2}
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
@@ -132,7 +132,7 @@ public interface FastAccess {
   int getInt(MemorySegment segment, String path, long index0, long index1, long index2);
 
   /**
-   * Read an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Read an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0}, {@code index1}, {@code index2} and {@code index3}.
    *
    * @param segment the current segment
@@ -141,7 +141,7 @@ public interface FastAccess {
    * @param index1 the index that will be inserted inside the second {@code []} specified by the path
    * @param index2 the index that will be inserted inside the third {@code []} specified by the path
    * @param index3 the index that will be inserted inside the fourth {@code []} specified by the path
-   * @return the int value at the position specified by the {@code path} and the indexes {@code index0},
+   * @return the int value at the position specified by the {@code path} and the indices {@code index0},
    *         {@code index1}, {@code index2} and {@code index3}
    *
    * @throws NullPointerException is either the {@code segment} or the {@code path} is null
@@ -187,7 +187,7 @@ public interface FastAccess {
   void setInt(MemorySegment segment, String path, long index0, int value);
 
   /**
-   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0} and {@code index1}.
    *
    * @param segment the current segment
@@ -206,7 +206,7 @@ public interface FastAccess {
   void setInt(MemorySegment segment, String path, long index0, long index1, int value);
 
   /**
-   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0}, {@code index1} and {@code index2}.
    *
    * @param segment the current segment
@@ -226,7 +226,7 @@ public interface FastAccess {
   void setInt(MemorySegment segment, String path, long index0, long index1, long index2, int value);
 
   /**
-   * Write an int from the {@code segment} at the position specified by the {@code path} and the indexes
+   * Write an int from the {@code segment} at the position specified by the {@code path} and the indices
    * {@code index0}, {@code index1}, {@code index2} and {@code index3}.
    *
    * @param segment the current segment
